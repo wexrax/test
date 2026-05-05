@@ -1,7 +1,7 @@
+// lib/presentation/screens/merchant/merchant_list_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../core/utils/currency_utils.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../providers/merchant_provider.dart';
@@ -42,10 +42,8 @@ class MerchantListScreen extends ConsumerWidget {
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    m.price.rub,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
+                  Text(m.price.rub,
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
                   Text(m.period == 'monthly' ? 'мес' : 'год'),
                 ],
               ),
@@ -93,7 +91,9 @@ class MerchantListScreen extends ConsumerWidget {
                   }
                 } else if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Минимальная сумма 100 ₽')),
+                    const SnackBar(
+                      content: Text('Минимальная сумма 100 ₽'),
+                    ),
                   );
                 }
               },

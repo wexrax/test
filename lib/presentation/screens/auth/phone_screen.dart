@@ -1,3 +1,4 @@
+// lib/presentation/screens/auth/phone_screen.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -5,6 +6,7 @@ import '../../../l10n/app_localizations.dart';
 
 class PhoneScreen extends StatefulWidget {
   const PhoneScreen({super.key});
+
   @override
   State<PhoneScreen> createState() => _PhoneScreenState();
 }

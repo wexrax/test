@@ -1,5 +1,5 @@
+// lib/presentation/providers/merchant_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../data/models/merchant_subscription_model.dart';
 import '../../domain/repositories/merchant_subscription_repository.dart';
 import 'repository_providers.dart';

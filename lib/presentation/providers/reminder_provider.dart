@@ -1,5 +1,5 @@
+// lib/presentation/providers/reminder_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'settings_provider.dart';
 import 'subscription_provider.dart';
 
@@ -19,15 +19,14 @@ final subscriptionRemindersProvider =
     Provider<List<SubscriptionReminderData>>((ref) {
   final settings = ref.watch(settingsProvider);
   final subscriptions = ref.watch(activeSubscriptionsProvider);
-  final enabledDays = <int>{
+
+  final enabledDays = {
     if (settings['notify_7days'] == 'true') 7,
     if (settings['notify_3days'] == 'true') 3,
     if (settings['notify_1day'] == 'true') 1,
   };
 
-  if (enabledDays.isEmpty) {
-    return const [];
-  }
+  if (enabledDays.isEmpty) return const [];
 
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
@@ -40,11 +39,7 @@ final subscriptionRemindersProvider =
       subscription.nextPaymentDate.day,
     );
     final daysUntilPayment = paymentDay.difference(today).inDays;
-
-    if (!enabledDays.contains(daysUntilPayment)) {
-      continue;
-    }
-
+    if (!enabledDays.contains(daysUntilPayment)) continue;
     reminders.add(
       SubscriptionReminderData(
         subscription: subscription,
@@ -54,10 +49,7 @@ final subscriptionRemindersProvider =
     );
   }
 
-  reminders.sort(
-    (a, b) => a.subscription.nextPaymentDate.compareTo(
-      b.subscription.nextPaymentDate,
-    ),
-  );
+  reminders.sort((a, b) => a.subscription.nextPaymentDate
+      .compareTo(b.subscription.nextPaymentDate));
   return reminders;
 });

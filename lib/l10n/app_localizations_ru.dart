@@ -1,285 +1,96 @@
+// lib/l10n/app_localizations_ru.dart
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
-/// The translations for Russian (`ru`).
 class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
-  @override
-  String get appTitle => 'Мои Подписки';
-
-  @override
-  String get onboardingSkip => 'Пропустить';
-
-  @override
-  String get onboardingNext => 'Далее';
-
-  @override
-  String get onboardingStart => 'Начать';
-
-  @override
-  String get phoneTitle => 'Введите номер телефона';
-
-  @override
-  String get phoneHint => '+7 (999) 999-99-99';
-
-  @override
-  String get agreeToTerms => 'Я согласен с условиями оферты';
-
-  @override
-  String get codeTitle => 'Введите код из SMS';
-
-  @override
-  String get demoCode => '123456';
-
-  @override
-  String get loginButton => 'Войти';
-
-  @override
-  String get logoutButton => 'Выйти';
-
-  @override
-  String get dashboardTitle => 'Дашборд';
-
-  @override
-  String get monthlySpending => 'Траты в месяц';
-
-  @override
-  String subscriptionCount(Object count) {
-    return 'Подписок: $count';
-  }
-
-  @override
-  String yearlySpending(Object amount) {
-    return 'В год: $amount';
-  }
-
-  @override
-  String averageCheck(Object amount) {
-    return 'Средний чек: $amount';
-  }
-
-  @override
-  String nextPayment(Object date) {
-    return 'Следующее списание: $date';
-  }
-
-  @override
-  String walletBalance(Object amount) {
-    return 'Баланс: $amount';
-  }
-
-  @override
-  String walletSufficientFor(Object months) {
-    return 'Хватит на $months мес.';
-  }
-
-  @override
-  String get vsMarket => 'vs рынок (2500 ₽)';
-
-  @override
-  String get quickActions => 'Быстрые действия';
-
-  @override
-  String get addSubscription => 'Добавить';
-
-  @override
-  String get calendar => 'Календарь';
-
-  @override
-  String get history => 'История';
-
-  @override
-  String get export => 'Экспорт';
-
-  @override
-  String get upcomingPayments => 'Ближайшие списания';
-
-  @override
-  String get categories => 'По категориям';
-
-  @override
-  String get activeSubscriptions => 'Активные';
-
-  @override
-  String get archivedSubscriptions => 'Архив';
-
-  @override
-  String get searchHint => 'Поиск по названию';
-
-  @override
-  String get detailTitle => 'Подписка';
-
-  @override
-  String get category => 'Категория';
-
-  @override
-  String get period => 'Период';
-
-  @override
-  String get status => 'Статус';
-
-  @override
-  String get yearlyAmount => 'Годовая сумма';
-
-  @override
-  String get markAsPaid => 'Я уже оплатил';
-
-  @override
-  String get edit => 'Редактировать';
-
-  @override
-  String get cancelDelete => 'Отменить / Удалить';
-
-  @override
-  String get calendarTitle => 'Календарь списаний';
-
-  @override
-  String get today => 'Сегодня';
-
-  @override
-  String get tomorrow => 'Завтра';
-
-  @override
-  String inDays(Object days) {
-    return 'Через $days дн.';
-  }
-
-  @override
-  String get walletTitle => 'Кошелёк';
-
-  @override
-  String get topUp => 'Пополнить';
-
-  @override
-  String get autoTopUp => 'Авто';
-
-  @override
-  String get autoTopUpSettings => 'Настройки автопополнения';
-
-  @override
-  String get threshold => 'Порог';
-
-  @override
-  String get amount => 'Сумма';
-
-  @override
-  String get transactionHistory => 'Последние операции';
-
-  @override
-  String get topUpModalTitle => 'Пополнение кошелька';
-
-  @override
-  String get enterAmount => 'Введите сумму';
-
-  @override
-  String get cancel => 'Отмена';
-
-  @override
-  String get confirm => 'Подтвердить';
-
-  @override
-  String get historyTitle => 'История списаний';
-
-  @override
-  String get filterPeriod => 'Период';
-
-  @override
-  String get month => 'Месяц';
-
-  @override
-  String get quarter => 'Квартал';
-
-  @override
-  String get year => 'Год';
-
-  @override
-  String totalForPeriod(Object amount) {
-    return 'Итого за период: $amount';
-  }
-
-  @override
-  String get merchantTitle => 'Свои подписки';
-
-  @override
-  String get createMerchant => 'Создать подписку';
-
-  @override
-  String get name => 'Название';
-
-  @override
-  String get description => 'Описание';
-
-  @override
-  String get price => 'Цена';
-
-  @override
-  String get periodMonthly => 'В месяц';
-
-  @override
-  String get periodYearly => 'В год';
-
-  @override
-  String get link => 'Ссылка';
-
-  @override
-  String get withdraw => 'Вывод';
-
-  @override
-  String get minWithdraw => 'Минимальная сумма 100 ₽';
-
-  @override
-  String subscribersCount(Object count) {
-    return 'Подписчиков: $count';
-  }
-
-  @override
-  String earned(Object amount) {
-    return 'Заработано: $amount';
-  }
-
-  @override
-  String get profileTitle => 'Профиль';
-
-  @override
-  String get phone => 'Телефон';
-
-  @override
-  String get settings => 'Настройки';
-
-  @override
-  String get notifications => 'Уведомления';
-
-  @override
-  String get notify7days => 'За 7 дней';
-
-  @override
-  String get notify3days => 'За 3 дня';
-
-  @override
-  String get notify1day => 'За 1 день';
-
-  @override
-  String get faceID => 'Face ID / Touch ID';
-
-  @override
-  String get timezone => 'Часовой пояс';
-
-  @override
-  String get exportCsv => 'Экспортировать CSV';
-
-  @override
-  String get dataExported => 'Данные экспортированы';
-
-  @override
-  String get done => 'Готово';
-
-  @override
-  String get paidSuccess => 'Оплата учтена';
-
-  @override
-  String get insufficientFunds => 'Недостаточно средств';
+  @override String get appTitle => 'Мои Подписки';
+  @override String get onboardingSkip => 'Пропустить';
+  @override String get onboardingNext => 'Далее';
+  @override String get onboardingStart => 'Начать';
+  @override String get phoneTitle => 'Введите номер телефона';
+  @override String get phoneHint => '+7 (999) 999-99-99';
+  @override String get agreeToTerms => 'Я согласен с условиями оферты';
+  @override String get codeTitle => 'Введите код из SMS';
+  @override String get demoCode => '123456';
+  @override String get loginButton => 'Войти';
+  @override String get logoutButton => 'Выйти';
+  @override String get dashboardTitle => 'Дашборд';
+  @override String get monthlySpending => 'Траты в месяц';
+  @override String subscriptionCount(Object count) => 'Подписок: $count';
+  @override String yearlySpending(Object amount) => 'В год: $amount';
+  @override String averageCheck(Object amount) => 'Средний чек: $amount';
+  @override String nextPayment(Object date) => 'Следующее списание: $date';
+  @override String walletBalance(Object amount) => 'Баланс: $amount';
+  @override String walletSufficientFor(Object months) => 'Хватит на $months мес.';
+  @override String get vsMarket => 'vs рынок (2500 ₽)';
+  @override String get quickActions => 'Быстрые действия';
+  @override String get addSubscription => 'Добавить';
+  @override String get calendar => 'Календарь';
+  @override String get history => 'История';
+  @override String get export => 'Экспорт';
+  @override String get upcomingPayments => 'Ближайшие списания';
+  @override String get categories => 'По категориям';
+  @override String get activeSubscriptions => 'Активные';
+  @override String get archivedSubscriptions => 'Архив';
+  @override String get searchHint => 'Поиск по названию';
+  @override String get detailTitle => 'Подписка';
+  @override String get category => 'Категория';
+  @override String get period => 'Период';
+  @override String get status => 'Статус';
+  @override String get yearlyAmount => 'Годовая сумма';
+  @override String get markAsPaid => 'Я уже оплатил';
+  @override String get edit => 'Редактировать';
+  @override String get cancelDelete => 'Отменить / Удалить';
+  @override String get calendarTitle => 'Календарь списаний';
+  @override String get today => 'Сегодня';
+  @override String get tomorrow => 'Завтра';
+  @override String inDays(Object days) => 'Через $days дн.';
+  @override String get walletTitle => 'Кошелёк';
+  @override String get topUp => 'Пополнить';
+  @override String get autoTopUp => 'Авто';
+  @override String get autoTopUpSettings => 'Настройки автопополнения';
+  @override String get threshold => 'Порог';
+  @override String get amount => 'Сумма';
+  @override String get transactionHistory => 'Последние операции';
+  @override String get topUpModalTitle => 'Пополнение кошелька';
+  @override String get enterAmount => 'Введите сумму';
+  @override String get cancel => 'Отмена';
+  @override String get confirm => 'Подтвердить';
+  @override String get historyTitle => 'История списаний';
+  @override String get filterPeriod => 'Период';
+  @override String get month => 'Месяц';
+  @override String get quarter => 'Квартал';
+  @override String get year => 'Год';
+  @override String totalForPeriod(Object amount) => 'Итого за период: $amount';
+  @override String get merchantTitle => 'Свои подписки';
+  @override String get createMerchant => 'Создать подписку';
+  @override String get name => 'Название';
+  @override String get description => 'Описание';
+  @override String get price => 'Цена';
+  @override String get periodMonthly => 'В месяц';
+  @override String get periodYearly => 'В год';
+  @override String get link => 'Ссылка';
+  @override String get withdraw => 'Вывод';
+  @override String get minWithdraw => 'Минимальная сумма 100 ₽';
+  @override String subscribersCount(Object count) => 'Подписчиков: $count';
+  @override String earned(Object amount) => 'Заработано: $amount';
+  @override String get profileTitle => 'Профиль';
+  @override String get phone => 'Телефон';
+  @override String get settings => 'Настройки';
+  @override String get notifications => 'Уведомления';
+  @override String get notify7days => 'За 7 дней';
+  @override String get notify3days => 'За 3 дня';
+  @override String get notify1day => 'За 1 день';
+  @override String get faceID => 'Face ID / Touch ID';
+  @override String get timezone => 'Часовой пояс';
+  @override String get exportCsv => 'Экспортировать CSV';
+  @override String get dataExported => 'Данные экспортированы';
+  @override String get done => 'Готово';
+  @override String get paidSuccess => 'Оплата записана';
+  @override String get insufficientFunds => 'Недостаточно средств';
 }

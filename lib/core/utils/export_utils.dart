@@ -1,3 +1,4 @@
+// lib/core/utils/export_utils.dart
 import 'dart:io';
 import 'package:csv/csv.dart';
 import 'package:path_provider/path_provider.dart';
@@ -23,21 +24,14 @@ class SubscriptionCsvRow {
 
 String buildSubscriptionsCsv(Iterable<SubscriptionCsvRow> subscriptions) {
   return const ListToCsvConverter().convert([
-    [
-      'Название',
-      'Категория',
-      'Сумма',
-      'Период',
-      'Следующее списание',
-      'Статус',
-    ],
-    ...subscriptions.map((subscription) => [
-          subscription.name,
-          subscription.category,
-          subscription.amount.toStringAsFixed(2),
-          subscription.period,
-          subscription.nextPaymentDate.toIso8601String(),
-          subscription.status,
+    ['Название', 'Категория', 'Сумма', 'Период', 'Следующее списание', 'Статус'],
+    ...subscriptions.map((s) => [
+          s.name,
+          s.category,
+          s.amount.toStringAsFixed(2),
+          s.period,
+          s.nextPaymentDate.toIso8601String(),
+          s.status,
         ]),
   ]);
 }

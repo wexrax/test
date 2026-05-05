@@ -1,5 +1,5 @@
+// lib/presentation/providers/repository_providers.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../data/local/app_database.dart';
 import '../../data/local/merchant_subscription_dao.dart';
 import '../../data/local/settings_dao.dart';
@@ -17,8 +17,7 @@ import '../../domain/repositories/subscription_repository.dart';
 import '../../domain/repositories/transaction_repository.dart';
 import '../../domain/repositories/wallet_repository.dart';
 
-final appDatabaseProvider =
-    Provider<AppDatabase>((ref) => AppDatabase.instance);
+final appDatabaseProvider = Provider<AppDatabase>((ref) => AppDatabase.instance);
 
 final subscriptionRepositoryProvider = Provider<SubscriptionRepository>((ref) {
   return SubscriptionRepositoryImpl(
@@ -38,8 +37,7 @@ final transactionRepositoryProvider = Provider<TransactionRepository>((ref) {
   );
 });
 
-final merchantSubscriptionRepositoryProvider =
-    Provider<MerchantSubscriptionRepository>((ref) {
+final merchantSubscriptionRepositoryProvider = Provider<MerchantSubscriptionRepository>((ref) {
   return MerchantSubscriptionRepositoryImpl(
     MerchantSubscriptionDao(ref.watch(appDatabaseProvider)),
   );

@@ -1,3 +1,4 @@
+// lib/presentation/screens/wallet/topup_modal.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../l10n/app_localizations.dart';
@@ -31,7 +32,9 @@ class _TopUpModalState extends ConsumerState<TopUpModal> {
       ),
       actions: [
         TextButton(
-            onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
+          onPressed: () => Navigator.pop(context),
+          child: Text(l10n.cancel),
+        ),
         ElevatedButton(
           onPressed: () async {
             final amount = double.tryParse(_amountCtrl.text) ?? 0;

@@ -1,3 +1,4 @@
+// lib/core/widgets/amount_card.dart
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_dimens.dart';
@@ -32,20 +33,32 @@ class AmountCard extends StatelessWidget {
                   Icon(icon, color: color ?? AppColors.primary, size: 20),
                   const SizedBox(width: 8),
                 ],
-                Text(title, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary)),
+                Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: AppColors.textSecondary),
+                ),
               ],
             ),
             const SizedBox(height: 8),
             Text(
               amount,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: color ?? AppColors.textPrimary,
-              ),
+                    fontWeight: FontWeight.bold,
+                    color: color ?? AppColors.textPrimary,
+                  ),
             ),
             if (subtitle != null) ...[
               const SizedBox(height: 4),
-              Text(subtitle!, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+              Text(
+                subtitle!,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: AppColors.textSecondary),
+              ),
             ],
           ],
         ),

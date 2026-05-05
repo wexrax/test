@@ -1,12 +1,12 @@
+// lib/presentation/providers/wallet_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../domain/repositories/transaction_repository.dart';
 import '../../domain/repositories/wallet_repository.dart';
 import 'repository_providers.dart';
 
 class TransactionData {
   final int id;
-  final String type; // 'topup' or 'payment'
+  final String type;
   final double amount;
   final DateTime date;
   final String description;
@@ -74,7 +74,6 @@ class WalletNotifier extends StateNotifier<WalletState> {
     final wallet = await _walletRepository.getWallet();
     final transactions = await _transactionRepository.getRecent(limit: 50);
     if (!mounted) return;
-
     state = WalletState(
       balance: wallet.balanceCents / 100,
       autoTopUpEnabled: wallet.autoTopUpEnabled,
@@ -141,29 +140,26 @@ final walletNotifierProvider =
   ),
 );
 
-final walletBalanceProvider = Provider<double>(
-  (ref) => ref.watch(walletNotifierProvider).balance,
-);
-
 final filteredTransactionsProvider =
     Provider.family<List<TransactionData>, String>((ref, period) {
-  final all = ref.watch(walletNotifierProvider).transactions;
+  final wallet = ref.watch(walletNotifierProvider);
   final now = DateTime.now();
   DateTime start;
   switch (period) {
+    case 'month':
+      start = DateTime(now.year, now.month, 1);
+      break;
     case 'quarter':
-      final quarterStartMonth = ((now.month - 1) ~/ 3) * 3 + 1;
-      start = DateTime(now.year, quarterStartMonth, 1);
+      final quarterStart = ((now.month - 1) ~/ 3) * 3 + 1;
+      start = DateTime(now.year, quarterStart, 1);
       break;
     case 'year':
       start = DateTime(now.year, 1, 1);
       break;
-    case 'month':
     default:
       start = DateTime(now.year, now.month, 1);
-      break;
   }
-  return all
-      .where((t) => t.date.isAfter(start.subtract(const Duration(days: 1))))
+  return wallet.transactions
+      .where((t) => t.date.isAfter(start) || t.date.isAtSameMomentAs(start))
       .toList();
 });

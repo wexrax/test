@@ -1,5 +1,5 @@
+// lib/presentation/providers/auth_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../data/local/app_database.dart';
 import '../../domain/repositories/settings_repository.dart';
 import 'merchant_provider.dart';

@@ -1,3 +1,4 @@
+// lib/presentation/screens/auth/code_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -29,7 +30,9 @@ class _CodeScreenState extends ConsumerState<CodeScreen> {
         await ref.read(authProvider.notifier).login(widget.phone);
         if (mounted) context.go('/dashboard');
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Неверный код')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Неверный код')),
+        );
       }
     }
   }
@@ -45,17 +48,24 @@ class _CodeScreenState extends ConsumerState<CodeScreen> {
           key: _formKey,
           child: Column(
             children: [
-              Text('Введите код, отправленный на ${widget.phone}', style: Theme.of(context).textTheme.bodyLarge),
+              Text(
+                'Введите код, отправленный на ${widget.phone}',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
               const SizedBox(height: 24),
               TextFormField(
                 controller: _codeController,
                 keyboardType: TextInputType.number,
                 maxLength: 6,
                 decoration: const InputDecoration(hintText: 'Код'),
-                validator: (v) => (v == null || v.length < 6) ? 'Введите 6 цифр' : null,
+                validator: (v) =>
+                    (v == null || v.length < 6) ? 'Введите 6 цифр' : null,
               ),
               const SizedBox(height: 24),
-              ElevatedButton(onPressed: _verifyCode, child: Text(l10n.loginButton)),
+              ElevatedButton(
+                onPressed: _verifyCode,
+                child: Text(l10n.loginButton),
+              ),
             ],
           ),
         ),

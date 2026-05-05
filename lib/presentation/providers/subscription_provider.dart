@@ -1,5 +1,6 @@
+// lib/presentation/providers/subscription_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import '../../core/utils/currency_utils.dart';
 import '../../core/utils/export_utils.dart';
 import '../../data/models/subscription_model.dart';
 import '../../domain/repositories/subscription_repository.dart';
@@ -146,7 +147,8 @@ class SubscriptionNotifier extends StateNotifier<SubscriptionState> {
 
 final subscriptionNotifierProvider =
     StateNotifierProvider<SubscriptionNotifier, SubscriptionState>(
-  (ref) => SubscriptionNotifier(ref.watch(subscriptionRepositoryProvider), ref),
+  (ref) => SubscriptionNotifier(
+      ref.watch(subscriptionRepositoryProvider), ref),
 );
 
 final activeSubscriptionsProvider = Provider<List<SubscriptionData>>((ref) {
@@ -169,75 +171,74 @@ final archivedSubscriptionsProvider = Provider<List<SubscriptionData>>((ref) {
       .toList();
 });
 
+final upcomingSubscriptionsProvider =
+    Provider.family<List<SubscriptionData>, int>((ref, limit) {
+  final active = ref.watch(activeSubscriptionsProvider);
+  final sorted = [...active]
+    ..sort((a, b) => a.nextPaymentDate.compareTo(b.nextPaymentDate));
+  return sorted.take(limit).toList();
+});
+
 final subscriptionByIdProvider =
     Provider.family<SubscriptionData?, int>((ref, id) {
-  for (final subscription
-      in ref.watch(subscriptionNotifierProvider).subscriptions) {
-    if (subscription.id == id) return subscription;
+  final all = ref.watch(allSubscriptionsProvider);
+  try {
+    return all.firstWhere((s) => s.id == id);
+  } catch (_) {
+    return null;
   }
-  return null;
 });
 
 final monthlyCostProvider = Provider<double>((ref) {
-  final active = ref.watch(activeSubscriptionsProvider);
-  double total = 0;
-  for (final s in active) {
-    if (s.period == 'monthly') {
-      total += s.amount;
-    } else if (s.period == 'yearly') {
-      total += s.amount / 12;
-    } else {
-      total += s.amount;
-    }
-  }
-  return total;
+  return ref.watch(activeSubscriptionsProvider).fold<double>(
+        0,
+        (sum, s) => sum + (s.period == 'monthly' ? s.amount : s.amount / 12),
+      );
 });
 
-final yearlyCostProvider =
-    Provider<double>((ref) => ref.watch(monthlyCostProvider) * 12);
+final yearlyCostProvider = Provider<double>((ref) {
+  return ref.watch(activeSubscriptionsProvider).fold<double>(
+        0,
+        (sum, s) => sum + (s.period == 'yearly' ? s.amount : s.amount * 12),
+      );
+});
 
 final averageCheckProvider = Provider<double>((ref) {
   final active = ref.watch(activeSubscriptionsProvider);
   if (active.isEmpty) return 0;
-  return active.fold<double>(0, (sum, s) => sum + s.amount) / active.length;
+  final total = active.fold<double>(0, (sum, s) => sum + s.amount);
+  return total / active.length;
 });
 
 final nextPaymentDateProvider = Provider<DateTime?>((ref) {
   final active = ref.watch(activeSubscriptionsProvider);
   if (active.isEmpty) return null;
-  return active
-      .map((s) => s.nextPaymentDate)
-      .reduce((a, b) => a.isBefore(b) ? a : b);
-});
-
-final upcomingSubscriptionsProvider =
-    Provider.family<List<SubscriptionData>, int>((ref, limit) {
-  final active = ref.watch(activeSubscriptionsProvider).toList()
+  final sorted = [...active]
     ..sort((a, b) => a.nextPaymentDate.compareTo(b.nextPaymentDate));
-  return active.take(limit).toList();
+  return sorted.first.nextPaymentDate;
 });
 
 final categoryBreakdownProvider = Provider<Map<String, double>>((ref) {
   final active = ref.watch(activeSubscriptionsProvider);
   final map = <String, double>{};
   for (final s in active) {
-    map[s.category] = (map[s.category] ?? 0) + s.amount;
+    final monthly =
+        s.period == 'monthly' ? s.amount : s.amount / 12;
+    map.update(s.category, (v) => v + monthly, ifAbsent: () => monthly);
   }
   return map;
 });
 
 final subscriptionsCsvProvider = Provider<String>((ref) {
-  final subscriptions = ref.watch(allSubscriptionsProvider);
+  final all = ref.watch(allSubscriptionsProvider);
   return buildSubscriptionsCsv(
-    subscriptions.map(
-      (subscription) => SubscriptionCsvRow(
-        name: subscription.name,
-        category: subscription.category,
-        amount: subscription.amount,
-        period: subscription.period,
-        nextPaymentDate: subscription.nextPaymentDate,
-        status: subscription.isActive ? 'active' : 'archived',
-      ),
-    ),
+    all.map((s) => SubscriptionCsvRow(
+          name: s.name,
+          category: s.category,
+          amount: s.amount,
+          period: s.period,
+          nextPaymentDate: s.nextPaymentDate,
+          status: s.isActive ? 'Активна' : 'Архив',
+        )),
   );
 });

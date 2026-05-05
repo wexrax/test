@@ -1,3 +1,4 @@
+// lib/presentation/screens/history/history_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/app_colors.dart';
@@ -19,7 +20,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final transactions = ref.watch(filteredTransactionsProvider(_selectedPeriod));
+    final transactions =
+        ref.watch(filteredTransactionsProvider(_selectedPeriod));
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.historyTitle)),
@@ -34,7 +36,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                 ButtonSegment(value: 'year', label: Text('Год')),
               ],
               selected: {_selectedPeriod},
-              onSelectionChanged: (v) => setState(() => _selectedPeriod = v.first),
+              onSelectionChanged: (v) =>
+                  setState(() => _selectedPeriod = v.first),
             ),
           ),
           Expanded(
@@ -43,7 +46,12 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    l10n.totalForPeriod(transactions.where((t) => t.type == 'payment').fold<double>(0, (sum, t) => sum + t.amount).rub),
+                    l10n.totalForPeriod(
+                      transactions
+                          .where((t) => t.type == 'payment')
+                          .fold<double>(0, (sum, t) => sum + t.amount)
+                          .rub,
+                    ),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -55,7 +63,13 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                       return ListTile(
                         title: Text(t.description),
                         subtitle: Text(t.date.dayMonth),
-                        trailing: Text(t.amount.rub, style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.danger)),
+                        trailing: Text(
+                          t.amount.rub,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.danger,
+                          ),
+                        ),
                       );
                     },
                   ),

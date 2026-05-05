@@ -1,3 +1,4 @@
+// lib/presentation/screens/merchant/create_merchant_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -22,7 +23,7 @@ class _CreateMerchantScreenState extends ConsumerState<CreateMerchantScreen> {
   Future<void> _submit() async {
     if (_formKey.currentState!.validate()) {
       final merchant = MerchantData(
-        id: 0, // временный ID, будет заменен
+        id: 0,
         name: _nameCtrl.text,
         description: _descCtrl.text,
         price: double.parse(_priceCtrl.text),
@@ -47,34 +48,40 @@ class _CreateMerchantScreenState extends ConsumerState<CreateMerchantScreen> {
           child: Column(
             children: [
               TextFormField(
-                  controller: _nameCtrl,
-                  decoration: InputDecoration(labelText: l10n.name),
-                  validator: (v) => v!.isEmpty ? 'Введите название' : null),
+                controller: _nameCtrl,
+                decoration: InputDecoration(labelText: l10n.name),
+                validator: (v) => v!.isEmpty ? 'Введите название' : null,
+              ),
               const SizedBox(height: 16),
               TextFormField(
-                  controller: _descCtrl,
-                  decoration: InputDecoration(labelText: l10n.description)),
+                controller: _descCtrl,
+                decoration: InputDecoration(labelText: l10n.description),
+              ),
               const SizedBox(height: 16),
               TextFormField(
-                  controller: _priceCtrl,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: l10n.price),
-                  validator: (v) => v!.isEmpty || double.tryParse(v) == null
-                      ? 'Введите цену'
-                      : null),
+                controller: _priceCtrl,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(labelText: l10n.price),
+                validator: (v) =>
+                    v!.isEmpty || double.tryParse(v) == null
+                        ? 'Введите цену'
+                        : null,
+              ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                initialValue: _period,
+                value: _period,
                 decoration: InputDecoration(labelText: l10n.period),
                 items: const [
                   DropdownMenuItem(value: 'monthly', child: Text('В месяц')),
-                  DropdownMenuItem(value: 'yearly', child: Text('В год'))
+                  DropdownMenuItem(value: 'yearly', child: Text('В год')),
                 ],
                 onChanged: (v) => setState(() => _period = v!),
               ),
               const SizedBox(height: 32),
               ElevatedButton(
-                  onPressed: _submit, child: Text(l10n.createMerchant)),
+                onPressed: _submit,
+                child: Text(l10n.createMerchant),
+              ),
             ],
           ),
         ),
