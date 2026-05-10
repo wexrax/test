@@ -1,5 +1,6 @@
 // lib/core/themes/dark_theme.dart
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_dimens.dart';
 
@@ -11,24 +12,46 @@ final darkTheme = ThemeData(
     brightness: Brightness.dark,
     primary: AppColors.primary,
     onPrimary: AppColors.textPrimary,
-    background: const Color(0xFF1A1A1A),
     surface: const Color(0xFF2C2C2C),
     error: AppColors.danger,
   ),
   scaffoldBackgroundColor: const Color(0xFF1A1A1A),
-  fontFamily: 'Roboto',
+  textTheme: GoogleFonts.interTextTheme(
+    const TextTheme(
+      headlineLarge: TextStyle(
+          fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
+      headlineMedium: TextStyle(
+          fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+      headlineSmall: TextStyle(
+          fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+      titleLarge: TextStyle(
+          fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
+      titleMedium: TextStyle(
+          fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
+      bodyLarge: TextStyle(fontSize: 16, color: Colors.white70),
+      bodyMedium: TextStyle(fontSize: 14, color: Colors.white70),
+      bodySmall: TextStyle(fontSize: 12, color: Colors.white54),
+    ),
+  ),
   appBarTheme: const AppBarTheme(
-    centerTitle: true,
+    centerTitle: false,
     elevation: 0,
-    backgroundColor: Color(0xFF2C2C2C),
+    backgroundColor: Colors.transparent,
+    surfaceTintColor: Colors.transparent, // ← убираем оттенок
     foregroundColor: Colors.white,
     iconTheme: IconThemeData(color: Colors.white),
     titleTextStyle: TextStyle(
       color: Colors.white,
       fontSize: 20,
       fontWeight: FontWeight.w600,
-      fontFamily: 'Roboto',
     ),
+  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    selectedItemColor: AppColors.primary,
+    unselectedItemColor: Colors.white54,
+    type: BottomNavigationBarType.fixed,
   ),
   cardTheme: CardThemeData(
     elevation: 2,
@@ -78,11 +101,11 @@ final darkTheme = ThemeData(
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
-      borderSide: const BorderSide(color: AppColors.divider),
+      borderSide: const BorderSide(color: Color(0xFF3A3A3A)),
     ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
-      borderSide: const BorderSide(color: AppColors.divider),
+      borderSide: const BorderSide(color: Color(0xFF3A3A3A)),
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(AppDimens.radiusSmall),
@@ -103,15 +126,5 @@ final darkTheme = ThemeData(
     color: Color(0xFF3A3A3A),
     thickness: 1,
     space: 1,
-  ),
-  textTheme: const TextTheme(
-    headlineLarge: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
-    headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-    headlineSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
-    titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
-    titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
-    bodyLarge: TextStyle(fontSize: 16, color: Colors.white70),
-    bodyMedium: TextStyle(fontSize: 14, color: Colors.white70),
-    bodySmall: TextStyle(fontSize: 12, color: Colors.white54),
   ),
 );

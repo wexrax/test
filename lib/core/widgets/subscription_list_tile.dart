@@ -20,10 +20,12 @@ class SubscriptionListTile extends StatelessWidget {
     final theme = Theme.of(context);
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(26), // скругление карточки
+      ),
       child: ListTile(
         onTap: onTap,
-        shape:
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        // shape больше не нужен, карточка сама обрежет
         leading: CircleAvatar(
           backgroundColor: _colorForLetter(subscription.iconLetter),
           child: Text(
@@ -40,7 +42,9 @@ class SubscriptionListTile extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          'Следующее: ${subscription.nextPaymentDate.relativeToNow()}',
+          subscription.isPendingArchive && subscription.archiveAt != null
+              ? 'Архивируется: ${_formatArchiveAt(subscription.archiveAt!)}'
+              : 'Следующее: ${subscription.nextPaymentDate.relativeToNow()}',
           style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
         ),
         trailing: Column(
@@ -77,5 +81,13 @@ class SubscriptionListTile extends StatelessWidget {
       Colors.orange,
     ];
     return colors[code % colors.length];
+  }
+
+  String _formatArchiveAt(DateTime archiveAt) {
+    final day = archiveAt.day.toString().padLeft(2, '0');
+    final month = archiveAt.month.toString().padLeft(2, '0');
+    final hour = archiveAt.hour.toString().padLeft(2, '0');
+    final minute = archiveAt.minute.toString().padLeft(2, '0');
+    return '$day.$month.${archiveAt.year}, $hour:$minute';
   }
 }

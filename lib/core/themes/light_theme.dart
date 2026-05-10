@@ -1,5 +1,6 @@
 // lib/core/themes/light_theme.dart
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_dimens.dart';
 
@@ -10,24 +11,56 @@ final lightTheme = ThemeData(
     brightness: Brightness.light,
     primary: AppColors.primary,
     onPrimary: AppColors.textPrimary,
-    background: AppColors.background,
     surface: AppColors.surface,
     error: AppColors.danger,
   ),
   scaffoldBackgroundColor: AppColors.background,
-  fontFamily: 'Roboto',
+  textTheme: GoogleFonts.interTextTheme(
+    const TextTheme(
+      headlineLarge: TextStyle(
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+          color: AppColors.textPrimary),
+      headlineMedium: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: AppColors.textPrimary),
+      headlineSmall: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: AppColors.textPrimary),
+      titleLarge: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: AppColors.textPrimary),
+      titleMedium: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: AppColors.textPrimary),
+      bodyLarge: TextStyle(fontSize: 16, color: AppColors.textSecondary),
+      bodyMedium: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+      bodySmall: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+    ),
+  ),
   appBarTheme: const AppBarTheme(
-    centerTitle: true,
+    centerTitle: false,
     elevation: 0,
-    backgroundColor: AppColors.surface,
+    backgroundColor: Colors.transparent,
+    surfaceTintColor: Colors.transparent, // ← убираем оттенок при скролле
     foregroundColor: AppColors.textPrimary,
     iconTheme: IconThemeData(color: AppColors.textPrimary),
     titleTextStyle: TextStyle(
       color: AppColors.textPrimary,
       fontSize: 20,
       fontWeight: FontWeight.w600,
-      fontFamily: 'Roboto',
     ),
+  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    selectedItemColor: AppColors.primary,
+    unselectedItemColor: AppColors.textSecondary,
+    type: BottomNavigationBarType.fixed,
   ),
   cardTheme: CardThemeData(
     elevation: 2,
@@ -101,15 +134,5 @@ final lightTheme = ThemeData(
     color: AppColors.divider,
     thickness: 1,
     space: 1,
-  ),
-  textTheme: const TextTheme(
-    headlineLarge: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
-    headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.textPrimary),
-    headlineSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
-    titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
-    titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
-    bodyLarge: TextStyle(fontSize: 16, color: AppColors.textSecondary),
-    bodyMedium: TextStyle(fontSize: 14, color: AppColors.textSecondary),
-    bodySmall: TextStyle(fontSize: 12, color: AppColors.textSecondary),
   ),
 );

@@ -9,6 +9,8 @@ class SettingsModel {
     required this.notify1Day,
     required this.faceIdEnabled,
     required this.timezone,
+    this.monthlyBudgetCents,
+    this.hiddenSavingsRecommendations = '',
     required this.onboardingCompleted,
     required this.createdAt,
     required this.updatedAt,
@@ -22,6 +24,8 @@ class SettingsModel {
   final bool notify1Day;
   final bool faceIdEnabled;
   final String timezone;
+  final int? monthlyBudgetCents;
+  final String hiddenSavingsRecommendations;
   final bool onboardingCompleted;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -37,6 +41,8 @@ class SettingsModel {
       'notify_1_day': notify1Day ? 1 : 0,
       'face_id_enabled': faceIdEnabled ? 1 : 0,
       'timezone': timezone,
+      'monthly_budget_cents': monthlyBudgetCents,
+      'hidden_savings_recommendations': hiddenSavingsRecommendations,
       'onboarding_completed': onboardingCompleted ? 1 : 0,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
@@ -54,9 +60,19 @@ class SettingsModel {
       notify1Day: map['notify_1_day'] == 1,
       faceIdEnabled: map['face_id_enabled'] == 1,
       timezone: map['timezone'] as String,
+      monthlyBudgetCents: _nullableInt(map['monthly_budget_cents']),
+      hiddenSavingsRecommendations:
+          map['hidden_savings_recommendations'] as String? ?? '',
       onboardingCompleted: map['onboarding_completed'] == 1,
       createdAt: DateTime.parse(map['created_at'] as String),
       updatedAt: DateTime.parse(map['updated_at'] as String),
     );
+  }
+
+  static int? _nullableInt(Object? value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    return int.tryParse(value.toString());
   }
 }

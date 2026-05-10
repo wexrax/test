@@ -1,5 +1,6 @@
 // lib/presentation/providers/wallet_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../data/models/transaction_model.dart';
 import '../../domain/repositories/transaction_repository.dart';
 import '../../domain/repositories/wallet_repository.dart';
 import 'repository_providers.dart';
@@ -70,7 +71,6 @@ class WalletNotifier extends StateNotifier<WalletState> {
   final TransactionRepository _transactionRepository;
 
   Future<void> load() async {
-    await _walletRepository.applyAutoTopUpIfNeeded();
     final wallet = await _walletRepository.getWallet();
     final transactions = await _transactionRepository.getRecent(limit: 50);
     if (!mounted) return;
@@ -79,17 +79,13 @@ class WalletNotifier extends StateNotifier<WalletState> {
       autoTopUpEnabled: wallet.autoTopUpEnabled,
       autoTopUpThreshold: wallet.autoTopUpThresholdCents / 100,
       autoTopUpAmount: wallet.autoTopUpAmountCents / 100,
-      transactions: transactions.map((transaction) {
-        return TransactionData(
-          id: transaction.id ?? 0,
-          type: transaction.type == 'charge' ? 'payment' : 'topup',
-          amount: transaction.amountCents / 100,
-          date: transaction.occurredAt,
-          description: transaction.note ?? '',
-          subscriptionId: transaction.subscriptionId,
-        );
-      }).toList(),
+      transactions: transactions.map(_transactionDataFromModel).toList(),
     );
+  }
+
+  Future<void> applyStartupAutoTopUp() async {
+    await _walletRepository.applyAutoTopUpIfNeeded();
+    await load();
   }
 
   Future<void> topUp(double amount) async {
@@ -141,8 +137,7 @@ final walletNotifierProvider =
 );
 
 final filteredTransactionsProvider =
-    Provider.family<List<TransactionData>, String>((ref, period) {
-  final wallet = ref.watch(walletNotifierProvider);
+    FutureProvider.family<List<TransactionData>, String>((ref, period) async {
   final now = DateTime.now();
   DateTime start;
   switch (period) {
@@ -159,7 +154,19 @@ final filteredTransactionsProvider =
     default:
       start = DateTime(now.year, now.month, 1);
   }
-  return wallet.transactions
-      .where((t) => t.date.isAfter(start) || t.date.isAtSameMomentAs(start))
-      .toList();
+  final transactions = await ref
+      .watch(transactionRepositoryProvider)
+      .getByPeriod(from: start, to: now.add(const Duration(days: 1)));
+  return transactions.map(_transactionDataFromModel).toList();
 });
+
+TransactionData _transactionDataFromModel(TransactionModel transaction) {
+  return TransactionData(
+    id: transaction.id ?? 0,
+    type: transaction.type == 'charge' ? 'payment' : 'topup',
+    amount: transaction.amountCents / 100,
+    date: transaction.occurredAt,
+    description: transaction.note ?? '',
+    subscriptionId: transaction.subscriptionId,
+  );
+}

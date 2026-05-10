@@ -20,11 +20,14 @@ class SettingsDao {
     required bool onboardingCompleted,
   }) async {
     final db = await _database.database;
-    await db.update('settings', {
-      'phone': phone,
-      'onboarding_completed': onboardingCompleted ? 1 : 0,
-      'updated_at': DateTime.now().toIso8601String(),
-    }, where: 'id = 1');
+    await db.update(
+        'settings',
+        {
+          'phone': phone,
+          'onboarding_completed': onboardingCompleted ? 1 : 0,
+          'updated_at': DateTime.now().toIso8601String(),
+        },
+        where: 'id = 1');
   }
 
   /// Обновляет переключатели уведомлений.
@@ -35,13 +38,16 @@ class SettingsDao {
     required bool notify1Day,
   }) async {
     final db = await _database.database;
-    await db.update('settings', {
-      'notifications_enabled': enabled ? 1 : 0,
-      'notify_7_days': notify7Days ? 1 : 0,
-      'notify_3_days': notify3Days ? 1 : 0,
-      'notify_1_day': notify1Day ? 1 : 0,
-      'updated_at': DateTime.now().toIso8601String(),
-    }, where: 'id = 1');
+    await db.update(
+        'settings',
+        {
+          'notifications_enabled': enabled ? 1 : 0,
+          'notify_7_days': notify7Days ? 1 : 0,
+          'notify_3_days': notify3Days ? 1 : 0,
+          'notify_1_day': notify1Day ? 1 : 0,
+          'updated_at': DateTime.now().toIso8601String(),
+        },
+        where: 'id = 1');
   }
 
   /// Обновляет локальные настройки безопасности и часовой пояс.
@@ -50,10 +56,35 @@ class SettingsDao {
     required String timezone,
   }) async {
     final db = await _database.database;
-    await db.update('settings', {
-      'face_id_enabled': faceIdEnabled ? 1 : 0,
-      'timezone': timezone,
-      'updated_at': DateTime.now().toIso8601String(),
-    }, where: 'id = 1');
+    await db.update(
+        'settings',
+        {
+          'face_id_enabled': faceIdEnabled ? 1 : 0,
+          'timezone': timezone,
+          'updated_at': DateTime.now().toIso8601String(),
+        },
+        where: 'id = 1');
+  }
+
+  Future<void> updateMonthlyBudget({required int? monthlyBudgetCents}) async {
+    final db = await _database.database;
+    await db.update(
+        'settings',
+        {
+          'monthly_budget_cents': monthlyBudgetCents,
+          'updated_at': DateTime.now().toIso8601String(),
+        },
+        where: 'id = 1');
+  }
+
+  Future<void> updateHiddenSavingsRecommendations(String value) async {
+    final db = await _database.database;
+    await db.update(
+        'settings',
+        {
+          'hidden_savings_recommendations': value,
+          'updated_at': DateTime.now().toIso8601String(),
+        },
+        where: 'id = 1');
   }
 }

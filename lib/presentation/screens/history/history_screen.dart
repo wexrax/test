@@ -41,40 +41,45 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
             ),
           ),
           Expanded(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    l10n.totalForPeriod(
-                      transactions
-                          .where((t) => t.type == 'payment')
-                          .fold<double>(0, (sum, t) => sum + t.amount)
-                          .rub,
+            child: transactions.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (_, __) =>
+                  const Center(child: Text('Не удалось загрузить историю')),
+              data: (transactions) => Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      l10n.totalForPeriod(
+                        transactions
+                            .where((t) => t.type == 'payment')
+                            .fold<double>(0, (sum, t) => sum + t.amount)
+                            .rub,
+                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    style: Theme.of(context).textTheme.titleMedium,
                   ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: transactions.length,
-                    itemBuilder: (_, i) {
-                      final t = transactions[i];
-                      return ListTile(
-                        title: Text(t.description),
-                        subtitle: Text(t.date.dayMonth),
-                        trailing: Text(
-                          t.amount.rub,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.danger,
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: transactions.length,
+                      itemBuilder: (_, i) {
+                        final t = transactions[i];
+                        return ListTile(
+                          title: Text(t.description),
+                          subtitle: Text(t.date.dayMonth),
+                          trailing: Text(
+                            t.amount.rub,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.danger,
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

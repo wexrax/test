@@ -47,4 +47,14 @@ class SettingsRepositoryImpl implements SettingsRepository {
       timezone: timezone,
     );
   }
+
+  @override
+  Future<void> updateMonthlyBudget({required int? monthlyBudgetCents}) {
+    return _dao.updateMonthlyBudget(monthlyBudgetCents: monthlyBudgetCents);
+  }
+
+  @override
+  Future<void> updateHiddenSavingsRecommendations(String value) {
+    return _dao.updateHiddenSavingsRecommendations(value);
+  }
 }

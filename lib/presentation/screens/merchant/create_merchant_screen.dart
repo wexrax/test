@@ -62,14 +62,13 @@ class _CreateMerchantScreenState extends ConsumerState<CreateMerchantScreen> {
                 controller: _priceCtrl,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: l10n.price),
-                validator: (v) =>
-                    v!.isEmpty || double.tryParse(v) == null
-                        ? 'Введите цену'
-                        : null,
+                validator: (v) => v!.isEmpty || double.tryParse(v) == null
+                    ? 'Введите цену'
+                    : null,
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                value: _period,
+                initialValue: _period,
                 decoration: InputDecoration(labelText: l10n.period),
                 items: const [
                   DropdownMenuItem(value: 'monthly', child: Text('В месяц')),

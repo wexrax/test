@@ -58,7 +58,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.subscriptions,
                         size: 100,
                         color: AppColors.primary,
@@ -103,7 +103,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           shape: BoxShape.circle,
                           color: _currentPage == index
                               ? AppColors.primary
-                              : AppColors.primary.withOpacity(0.3),
+                              : AppColors.primary.withValues(alpha: 0.3),
                         ),
                       ),
                     ),

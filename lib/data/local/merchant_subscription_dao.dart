@@ -36,6 +36,7 @@ class MerchantSubscriptionDao {
       'merchant_subscriptions',
       subscription.toMap()
         ..remove('id')
+        ..remove('created_at')
         ..['updated_at'] = DateTime.now().toIso8601String(),
       where: 'id = ?',
       whereArgs: [id],

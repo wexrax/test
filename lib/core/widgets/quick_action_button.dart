@@ -18,7 +18,7 @@ class QuickActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(18),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -27,8 +27,8 @@ class QuickActionButton extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(12),
+                color: AppColors.primary.withValues(alpha: 0.25),
+                borderRadius: BorderRadius.circular(18),
               ),
               child: Icon(icon,
                   color: Theme.of(context).colorScheme.onSurface, size: 28),
@@ -47,5 +47,6 @@ class QuickActionButton extends StatelessWidget {
         ),
       ),
     );
+
   }
 }

@@ -24,4 +24,10 @@ abstract class SettingsRepository {
     required bool faceIdEnabled,
     required String timezone,
   });
+
+  /// Обновляет личный месячный лимит бюджета.
+  Future<void> updateMonthlyBudget({required int? monthlyBudgetCents});
+
+  /// Обновляет список скрытых рекомендаций по экономии.
+  Future<void> updateHiddenSavingsRecommendations(String value);
 }

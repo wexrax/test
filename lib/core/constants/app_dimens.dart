@@ -6,7 +6,7 @@ class AppDimens {
   static const double radiusSmall = 8.0;
   static const double radiusMedium = 12.0;
   static const double radiusLarge = 16.0;
-  static const double radiusExtraLarge = 20.0;
+  static const double radiusExtraLarge = 26.0;
   static const double iconSize = 24.0;
   static const double largeIconSize = 48.0;
 }

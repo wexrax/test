@@ -1,6 +1,7 @@
 import '../../domain/repositories/subscription_repository.dart';
 import '../local/subscription_dao.dart';
 import '../models/subscription_model.dart';
+import '../models/subscription_price_history_model.dart';
 
 /// Реализация [SubscriptionRepository] на SQLite.
 class SubscriptionRepositoryImpl implements SubscriptionRepository {
@@ -47,5 +48,43 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
   Future<void> delete(int id) => _dao.delete(id);
 
   @override
+  Future<void> scheduleArchive(int id, DateTime archiveAt) {
+    return _dao.scheduleArchive(id, archiveAt);
+  }
+
+  @override
+  Future<void> clearArchiveTimer(int id) => _dao.clearArchiveTimer(id);
+
+  @override
+  Future<int> archiveDueSubscriptions(DateTime now) {
+    return _dao.archiveDueSubscriptions(now);
+  }
+
+  @override
+  Future<int> cancelDueTrials(DateTime now) {
+    return _dao.cancelDueTrials(now);
+  }
+
+  @override
   Future<void> markAsPaid(int id) => _dao.markAsPaid(id);
+
+  @override
+  Future<void> markUsed(int id, {DateTime? usedAt}) {
+    return _dao.markUsed(id, usedAt: usedAt);
+  }
+
+  @override
+  Future<void> hideInactiveSuggestion(int id, {DateTime? hiddenAt}) {
+    return _dao.hideInactiveSuggestion(id, hiddenAt: hiddenAt);
+  }
+
+  @override
+  Future<void> setCancelAfterTrial(int id, bool value) {
+    return _dao.setCancelAfterTrial(id, value);
+  }
+
+  @override
+  Future<List<SubscriptionPriceHistoryModel>> getPriceHistory() {
+    return _dao.getPriceHistory();
+  }
 }

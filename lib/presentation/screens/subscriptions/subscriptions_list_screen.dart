@@ -7,7 +7,9 @@ import '../../../l10n/app_localizations.dart';
 import '../../providers/subscription_provider.dart';
 
 class SubscriptionsListScreen extends ConsumerStatefulWidget {
-  const SubscriptionsListScreen({super.key});
+  const SubscriptionsListScreen({super.key, this.initialCategory});
+
+  final String? initialCategory;
 
   @override
   ConsumerState<SubscriptionsListScreen> createState() =>
@@ -19,11 +21,13 @@ class _SubscriptionsListScreenState
     with SingleTickerProviderStateMixin {
   final _searchController = TextEditingController();
   late TabController _tabController;
+  String? _categoryFilter;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _categoryFilter = widget.initialCategory;
   }
 
   @override
@@ -41,7 +45,7 @@ class _SubscriptionsListScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Подписки'),
+        title: const Text('Подписки'),
         bottom: TabBar(
           controller: _tabController,
           tabs: [
@@ -63,6 +67,17 @@ class _SubscriptionsListScreenState
               onChanged: (_) => setState(() {}),
             ),
           ),
+          if (_categoryFilter != null)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: InputChip(
+                  label: Text('Категория: $_categoryFilter'),
+                  onDeleted: () => setState(() => _categoryFilter = null),
+                ),
+              ),
+            ),
           Expanded(
             child: TabBarView(
               controller: _tabController,
@@ -79,8 +94,12 @@ class _SubscriptionsListScreenState
 
   Widget _buildList(List<SubscriptionData> list) {
     final query = _searchController.text.toLowerCase();
-    final filtered =
-        list.where((s) => s.name.toLowerCase().contains(query)).toList();
+    final category = _categoryFilter;
+    final filtered = list.where((s) {
+      final matchesQuery = s.name.toLowerCase().contains(query);
+      final matchesCategory = category == null || s.category == category;
+      return matchesQuery && matchesCategory;
+    }).toList();
     return ListView.builder(
       itemCount: filtered.length,
       itemBuilder: (_, i) => SubscriptionListTile(
